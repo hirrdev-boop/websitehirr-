@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TOKO THOHIR PREMIUM - Admin Dashboard & Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, 'Segoe UI', -apple-system, 'Poppins', sans-serif;
+            background: #000000;
+            background-image: radial-gradient(circle at 15% 30%, #111111 2%, #000000 90%);
+            color: #f0f0f0;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* kartu elegan hitam putih */
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #2c2c2c;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: transform 0.2s ease, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: #555555;
+            transform: translateY(-3px);
+        }
+
+        h1 {
+            font-size: 2.7rem;
+            background: linear-gradient(135deg, #FFFFFF, #aaaaaa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-left: 4px solid #ffffff;
+            padding-left: 1rem;
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .badge {
+            background: #1a1a1a;
+            border: 1px solid #3a3a3a;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #dddddd;
+        }
+
+        .badge.white {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn {
+            background: #1f1f1f;
+            padding: 0.7rem 1.8rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            color: #eeeeee;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #3f3f3f;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #e0e0e0;
+            transform: scale(1.02);
+        }
+
+        .btn-danger {
+            background: #991b1b;
+            border-color: #dc2626;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* produk grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .product-card {
+            background: #0c0c0c;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #2a2a2a;
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            border-color: #ffffff50;
+            transform: translateY(-5px);
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0.5rem 0;
+        }
+
+        .stock-status {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .stock-available {
+            background: #15803d;
+            color: white;
+        }
+
+        .stock-sold {
+            background: #991b1b;
+            color: white;
+        }
+
+        /* admin panel */
+        .admin-panel {
+            background: #050505;
+            border: 2px solid #2c2c2c;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #2c2c2c;
+            padding-bottom: 1rem;
+        }
+
+        .admin-login {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-login input {
+            background: #1a1a1a;
+            border: 1px solid #3f3f3f;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .admin-login input:focus {
+            outline: none;
+            border-color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .admin-content {
+            margin-top: 1.5rem;
+        }
+
+        .stock-input {
+            width: 80px;
+            background: #1a1a1a;
+            border: 1px solid #3f3f3f;
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .qris-section {
+            background: #030303;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #2c2c2c;
+            margin: 1rem 0;
+        }
+
+        .qris-image {
+            max-width: 260px;
+            width: 100%;
+            border-radius: 20px;
+            background: white;
+            padding: 0.8rem;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .nomor-owner {
+            background: #111;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0.8rem 0;
+            border: 1px solid #525252;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            color: #aaa;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            .card { padding: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- HEADER TOKO -->
+    <div class="card">
+        <div style="text-align: center;">
+            <div class="badge-group">
+                <div class="badge">⚡ Trusted Seller</div>
+                <div class="badge white">🔥 TOKO THOHIR PREMIUM</div>
+                <div class="badge">⭐ 24/7 Support</div>
+            </div>
+            <h1>TOKO THOHIR PREMIUM</h1>
+            <p style="font-size: 1.1rem; color: #bcbcbc;">Akun Premium • Canva • Capcut • Dll</p>
+            <div class="stats" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem;">
+                <span>✅ Resmi</span>
+                <span>🔒 Garansi</span>
+                <span>⚡ Fast Respon</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST PRODUK (Canva & Capcut) -->
+    <div class="card">
+        <h2>📦 Produk Premium</h2>
+        <div class="product-grid" id="productGrid">
+            <!-- Canva Premium -->
+            <div class="product-card" data-product="canva">
+                <h3>🎨 Canva Premium</h3>
+                <p>Akses penuh template, elemen, fitur AI Canva</p>
+                <div class="product-price">Rp 2.000</div>
+                <div class="stock-status" id="canvaStockBadge">✅ Stok Tersedia</div>
+                <div class="btn-group" style="margin-top: 1rem;">
+                    <button class="btn btn-primary order-btn" data-product="canva" data-price="2000">🛒 Beli Sekarang</button>
+                </div>
+            </div>
+            <!-- Capcut Premium 35 day -->
+            <div class="product-card" data-product="capcut">
+                <h3>✂️ Capcut Premium</h3>
+                <p>Capcut Pro 35 hari • Efek & filter lengkap</p>
+                <div class="product-price">Rp 10.000</div>
+                <div class="stock-status" id="capcutStockBadge">✅ Stok Tersedia</div>
+                <div class="btn-group" style="margin-top: 1rem;">
+                    <button class="btn btn-primary order-btn" data-product="capcut" data-price="10000">🛒 Beli Sekarang</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KONFIRMASI PEMBAYARAN + QRIS -->
+    <div class="card">
+        <div style="text-align: center;">
+            <span style="background: #ffffff10; padding: 0.2rem 1rem; border-radius: 30px;">💳 KONFIRMASI PEMBAYARAN</span>
+            <h2 style="margin: 1rem 0 0.25rem;">Nomor Resmi Owner</h2>
+            <div class="nomor-owner">📞 085936682759</div>
+            <div class="btn-group">
+                <a href="https://wa.me/6285936682759" target="_blank" class="btn btn-primary">💬 Konfirmasi ke WhatsApp</a>
+                <a href="https://t.me/+6285936682759" target="_blank" class="btn btn-outline">📱 Chat via Telegram</a>
+            </div>
+        </div>
+        <div class="qris-section">
+            <h3>📸 Scan QRIS DANA</h3>
+            <img class="qris-image" src="https://files.catbox.moe/8izjx2.jpg" alt="QRIS DANA">
+            <p style="margin-top: 0.8rem;">Scan & bayar, lalu kirim bukti ke owner untuk aktivasi akun.</p>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD (untuk stok manual) -->
+    <div class="card" id="adminSection">
+        <h2>🔐 Admin Dashboard</h2>
+        <div class="admin-panel">
+            <div class="admin-header">
+                <strong>👑 Panel Kelola Stok</strong>
+                <div class="admin-login" id="adminLoginDiv">
+                    <input type="password" id="adminPassword" placeholder="Masukkan password admin">
+                    <button class="btn" id="loginAdminBtn">Login Admin</button>
+                </div>
+            </div>
+            <div id="adminContent" class="admin-content hidden">
+                <p style="margin-bottom: 1rem;">✨ Mode Admin aktif — Anda bisa mengubah stok produk secara manual.</p>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h3>🎨 Canva Premium</h3>
+                        <label>Stok (isi 0 untuk kosong, 1 untuk tersedia):</label>
+                        <select id="adminCanvaStock" class="stock-input" style="width: auto; margin-top: 0.5rem;">
+                            <option value="1">✅ Tersedia</option>
+                            <option value="0">❌ Habis / Sold Out</option>
+                        </select>
+                        <button class="btn btn-primary" id="updateCanvaStock" style="margin-top: 1rem;">Update Stok Canva</button>
+                    </div>
+                    <div class="product-card">
+                        <h3>✂️ Capcut Premium (35 day)</h3>
+                        <label>Stok (isi 0 untuk kosong, 1 untuk tersedia):</label>
+                        <select id="adminCapcutStock" class="stock-input" style="width: auto; margin-top: 0.5rem;">
+                            <option value="1">✅ Tersedia</option>
+                            <option value="0">❌ Habis / Sold Out</option>
+                        </select>
+                        <button class="btn btn-primary" id="updateCapcutStock" style="margin-top: 1rem;">Update Stok Capcut</button>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.8rem; color: #aaa;">*Stok akan berubah otomatis di halaman utama setelah diupdate.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TESTIMONI & RESELLER -->
+    <div class="card">
+        <h2>💬 Testimoni Pelanggan</h2>
+        <div class="testimonial-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1rem;">
+            <div class="testi-card" style="background:#0c0c0c; padding: 1rem; border-left: 3px solid white;">
+                <div class="stars">★★★★★</div>
+                <p>"Canva premium langsung aktif, recomended!"</p>
+                <small>- Andi</small>
+            </div>
+            <div class="testi-card" style="background:#0c0c0c; padding: 1rem; border-left: 3px solid white;">
+                <div class="stars">★★★★★</div>
+                <p>"Capcut 35 day murah cuma 10k, kualitas ok"</p>
+                <small>- Siti</small>
+            </div>
+        </div>
+        <div class="reseller-section" style="background:#050505; padding:1.5rem; margin-top:1rem; text-align:center;">
+            <h3>🌟 Join Reseller Thohir Premium</h3>
+            <p>Daftar reseller & dapatkan harga khusus</p>
+            <div class="btn-group">
+                <a href="https://wa.me/6285936682759?text=Halo%20Toko%20Thohir%2C%20saya%20mau%20daftar%20reseller" class="btn btn-primary">📝 Daftar Reseller</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 TOKO THOHIR PREMIUM • Canva 2k • Capcut 35 day 10k • Admin panel stok manual</p>
+        <p>Konfirmasi pembayaran: 085936682759 (Owner)</p>
+    </footer>
+</div>
+
+<script>
+    // Admin password default (bisa diganti)
+    const ADMIN_PASSWORD = "admin123";
+    let isAdminLoggedIn = false;
+
+    // State stok produk (1 = tersedia, 0 = habis)
+    let stockState = {
+        canva: 1,
+        capcut: 1
+    };
+
+    // Load dari localStorage jika ada
+    function loadStockFromLocal() {
+        const saved = localStorage.getItem("thohir_stock");
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed.canva !== undefined) stockState.canva = parsed.canva;
+            if (parsed.capcut !== undefined) stockState.capcut = parsed.capcut;
+        }
+        updateStockDisplay();
+    }
+
+    function saveStockToLocal() {
+        localStorage.setItem("thohir_stock", JSON.stringify(stockState));
+    }
+
+    function updateStockDisplay() {
+        // Update badge stok di halaman utama
+        const canvaBadge = document.getElementById("canvaStockBadge");
+        const capcutBadge = document.getElementById("capcutStockBadge");
+        
+        if (stockState.canva === 1) {
+            canvaBadge.innerText = "✅ Stok Tersedia";
+            canvaBadge.className = "stock-status stock-available";
+        } else {
+            canvaBadge.innerText = "❌ Stok Habis";
+            canvaBadge.className = "stock-status stock-sold";
+        }
+        
+        if (stockState.capcut === 1) {
+            capcutBadge.innerText = "✅ Stok Tersedia";
+            capcutBadge.className = "stock-status stock-available";
+        } else {
+            capcutBadge.innerText = "❌ Stok Habis";
+            capcutBadge.className = "stock-status stock-sold";
+        }
+
+        // update tampilan tombol beli dinonaktifkan jika stok 0
+        document.querySelectorAll(".order-btn").forEach(btn => {
+            const product = btn.getAttribute("data-product");
+            if (stockState[product] === 0) {
+                btn.disabled = true;
+                btn.style.opacity = "0.5";
+                btn.style.cursor = "not-allowed";
+                btn.innerText = "⛔ Stok Habis";
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                const price = btn.getAttribute("data-price") === "2000" ? "Beli Sekarang" : "Beli Sekarang";
+                btn.innerText = "🛒 Beli Sekarang";
+            }
+        });
+    }
+
+    // Event order
+    document.querySelectorAll(".order-btn").forEach(btn => {
+        btn.addEventListener("click", function(e) {
+            const product = this.getAttribute("data-product");
+            const price = this.getAttribute("data-price");
+            if (stockState[product] === 0) {
+                alert("Maaf, stok produk ini sedang habis. Silakan cek lagi nanti.");
+                return;
+            }
+            const productName = product === "canva" ? "Canva Premium (2k)" : "Capcut Premium 35 day (10k)";
+            const waMessage = `Halo Kak, saya mau order ${productName} - Rp ${price}\n\nSudah transfer via QRIS DANA. Mohon dikirimkan akunnya. Terima kasih.`;
+            const waUrl = `https://wa.me/6285936682759?text=${encodeURIComponent(waMessage)}`;
+            window.open(waUrl, "_blank");
+        });
+    });
+
+    // Admin login
+    document.getElementById("loginAdminBtn").addEventListener("click", function() {
+        const password = document.getElementById("adminPassword").value;
+        if (password === ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            document.getElementById("adminContent").classList.remove("hidden");
+            document.getElementById("adminLoginDiv").innerHTML = '<span style="color:green;">✅ Admin logged in</span> <button class="btn" id="logoutAdminBtn">Logout</button>';
+            document.getElementById("logoutAdminBtn").addEventListener("click", function() {
+                isAdminLoggedIn = false;
+                document.getElementById("adminContent").classList.add("hidden");
+                document.getElementById("adminLoginDiv").innerHTML = '<input type="password" id="adminPassword" placeholder="Masukkan password admin"><button class="btn" id="loginAdminBtn">Login Admin</button>';
+                document.getElementById("loginAdminBtn").addEventListener("click", arguments.callee);
+            });
+            // set select sesuai stok saat ini
+            document.getElementById("adminCanvaStock").value = stockState.canva;
+            document.getElementById("adminCapcutStock").value = stockState.capcut;
+        } else {
+            alert("Password admin salah! (default: admin123)");
+        }
+    });
+
+    // Update stok via admin
+    document.getElementById("updateCanvaStock").addEventListener("click", function() {
+        if (!isAdminLoggedIn) { alert("Silakan login admin dulu."); return; }
+        const newStock = parseInt(document.getElementById("adminCanvaStock").value);
+        stockState.canva = newStock;
+        saveStockToLocal();
+        updateStockDisplay();
+        alert("Stok Canva berhasil diupdate!");
+    });
+
+    document.getElementById("updateCapcutStock").addEventListener("click", function() {
+        if (!isAdminLoggedIn) { alert("Silakan login admin dulu."); return; }
+        const newStock = parseInt(document.getElementById("adminCapcutStock").value);
+        stockState.capcut = newStock;
+        saveStockToLocal();
+        updateStockDisplay();
+        alert("Stok Capcut berhasil diupdate!");
+    });
+
+    // Init
+    loadStockFromLocal();
+</script>
+</body>
+</html>
